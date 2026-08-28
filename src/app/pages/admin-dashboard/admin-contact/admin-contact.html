@@ -1,0 +1,30 @@
+<section class="admin-contact">
+  <h2>Contact Messages</h2>
+
+  @if (isLoading()) {
+    <p>Loading...</p>
+  } @else if (messages().length === 0) {
+    <p>No messages yet.</p>
+  } @else {
+    <div class="message-list">
+      @for (msg of messages(); track msg.id) {
+        <div class="message-card" [class.unread]="!msg.isRead">
+          <div class="message-header">
+            <strong>{{ msg.name }}</strong>
+            <span class="email">{{ msg.email }}</span>
+            @if (!msg.isRead) {
+              <span class="badge">New</span>
+            }
+          </div>
+          <p class="message-body">{{ msg.message }}</p>
+          <div class="message-actions">
+            @if (!msg.isRead) {
+              <button (click)="markAsRead(msg.id)">Mark as Read</button>
+            }
+            <button (click)="deleteMessage(msg.id)">Delete</button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</section>

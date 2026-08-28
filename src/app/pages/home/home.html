@@ -1,0 +1,56 @@
+@if (isLoading()) {
+  <p class="loading-text">Loading...</p>
+} @else if (!about()) {
+  <p class="loading-text">About information hasn't been added yet.</p>
+} @else {
+  <section class="hero">
+    <div class="hero__photo">
+      <div class="hero__ring"></div>
+      @if (about()!.photoUrl) {
+        <img [src]="about()!.photoUrl" [alt]="about()!.fullName" />
+      } @else {
+        <div class="hero__photo-placeholder"></div>
+      }
+      <div class="hero__badge">
+        <svg viewBox="0 0 100 100" class="hero__badge-text">
+          <path
+            id="badge-circle"
+            fill="none"
+            d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"
+          />
+          <text>
+            <textPath href="#badge-circle">AVAILABLE FOR WORK • AVAILABLE FOR WORK •</textPath>
+          </text>
+        </svg>
+        <span class="hero__badge-dot"></span>
+      </div>
+    </div>
+    <div class="hero__text">
+      <p class="eyebrow">{{ about()!.title }}</p>
+      <h1>{{ about()!.fullName }}</h1>
+      <p class="bio">{{ about()!.bio }}</p>
+      <div class="hero__links">
+        <a routerLink="/contact" class="btn-primary">Let's talk</a>
+        <a routerLink="/projects" class="btn-secondary">View work</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="quick-links">
+    <a routerLink="/education" class="quick-card">
+      <span class="quick-card__number">01</span>
+      <h3>Education</h3>
+      <p>Academic background and formal training.</p>
+    </a>
+    <a routerLink="/licenses" class="quick-card">
+      <span class="quick-card__number">02</span>
+      <h3>Licenses</h3>
+      <p>Certifications and professional credentials.</p>
+    </a>
+    <a routerLink="/projects" class="quick-card">
+      <span class="quick-card__number">03</span>
+      <h3>Projects</h3>
+      <p>A selection of things I've built.</p>
+    </a>
+  </section>
+}

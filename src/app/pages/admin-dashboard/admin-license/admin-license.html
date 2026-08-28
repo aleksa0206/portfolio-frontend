@@ -1,0 +1,78 @@
+<div class="form-page">
+  <h2>Manage Licenses</h2>
+
+  <form [formGroup]="licenseForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" type="text" formControlName="name" />
+    </div>
+
+    <div class="form-group">
+      <label for="issuer">Issuer</label>
+      <input id="issuer" type="text" formControlName="issuer" />
+    </div>
+
+    <div class="form-group">
+      <label for="issueDate">Issue Date</label>
+      <input id="issueDate" type="date" formControlName="issueDate" />
+    </div>
+
+    <div class="form-group">
+      <label for="expiryDate">Expiry Date (optional)</label>
+      <input id="expiryDate" type="date" formControlName="expiryDate" />
+    </div>
+
+    <div class="form-group">
+      <label for="credentialUrl">Credential URL (optional)</label>
+      <input id="credentialUrl" type="text" formControlName="credentialUrl" />
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="licenseForm.invalid">
+        @if (editingId() !== null) {
+          Save Changes
+        } @else {
+          Add Entry
+        }
+      </button>
+
+      @if (editingId() !== null) {
+        <button type="button" (click)="cancelEdit()">Cancel</button>
+      }
+    </div>
+  </form>
+
+  <hr />
+
+  <h3>Existing Entries</h3>
+
+  @if (isLoading()) {
+    <p>Loading...</p>
+  } @else if (licenseList().length === 0) {
+    <p>No entries yet.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Issuer</th>
+          <th>Issue Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of licenseList(); track item.id) {
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.issuer }}</td>
+            <td>{{ item.issueDate }}</td>
+            <td>
+              <button (click)="startEdit(item)">Edit</button>
+              <button (click)="deleteItem(item.id)">Delete</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

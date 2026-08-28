@@ -1,0 +1,35 @@
+<section class="page-section">
+  <p class="eyebrow">Selected Work</p>
+  <h1>Projects</h1>
+
+  @if (isLoading()) {
+    <p>Loading...</p>
+  } @else if (projectList().length === 0) {
+    <p>No projects yet.</p>
+  } @else {
+    <div class="card-grid">
+      @for (item of projectList(); track item.id) {
+        <div class="card card--project">
+          @if (item.imageUrl) {
+            <img [src]="item.imageUrl" [alt]="item.title" class="card__image" />
+          }
+          <h3>{{ item.title }}</h3>
+          <p class="card__body">{{ item.description }}</p>
+          <div class="tech-tags">
+            @for (tech of item.techStack.split(','); track tech) {
+              <span class="tech-tag">{{ tech.trim() }}</span>
+            }
+          </div>
+          <div class="card__links">
+            @if (item.demoUrl) {
+              <a [href]="item.demoUrl" target="_blank" class="card__link">Live demo →</a>
+            }
+            @if (item.repoUrl) {
+              <a [href]="item.repoUrl" target="_blank" class="card__link">Source →</a>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</section>

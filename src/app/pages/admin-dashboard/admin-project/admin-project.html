@@ -1,0 +1,81 @@
+<div class="form-page">
+  <h2>Manage Projects</h2>
+
+  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input id="title" type="text" formControlName="title" />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="imageUrl">Image URL (optional)</label>
+      <input id="imageUrl" type="text" formControlName="imageUrl" />
+    </div>
+
+    <div class="form-group">
+      <label for="demoUrl">Demo URL (optional)</label>
+      <input id="demoUrl" type="text" formControlName="demoUrl" />
+    </div>
+
+    <div class="form-group">
+      <label for="repoUrl">Repository URL (optional)</label>
+      <input id="repoUrl" type="text" formControlName="repoUrl" />
+    </div>
+
+    <div class="form-group">
+      <label for="techStack">Tech Stack</label>
+      <input id="techStack" type="text" formControlName="techStack" placeholder="e.g. Angular, Node.js, MySQL" />
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="projectForm.invalid">
+        @if (editingId() !== null) {
+          Save Changes
+        } @else {
+          Add Project
+        }
+      </button>
+
+      @if (editingId() !== null) {
+        <button type="button" (click)="cancelEdit()">Cancel</button>
+      }
+    </div>
+  </form>
+
+  <hr />
+
+  <h3>Existing Projects</h3>
+
+  @if (isLoading()) {
+    <p>Loading...</p>
+  } @else if (projectList().length === 0) {
+    <p>No projects added yet.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Tech Stack</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of projectList(); track item.id) {
+          <tr>
+            <td>{{ item.title }}</td>
+            <td>{{ item.techStack }}</td>
+            <td>
+              <button (click)="startEdit(item)">Edit</button>
+              <button (click)="deleteItem(item.id)">Delete</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

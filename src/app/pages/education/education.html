@@ -1,0 +1,26 @@
+<section class="page-section">
+  <p class="eyebrow">Background</p>
+  <h1>Education</h1>
+
+  @if (isLoading()) {
+    <p>Loading...</p>
+  } @else if (educationList().length === 0) {
+    <p>No education records yet.</p>
+  } @else {
+    <div class="card-grid">
+      @for (item of educationList(); track item.id) {
+        <div class="card">
+          <span class="card__date">{{ item.startDate | slice:0:4 }} — {{ item.endDate ? (item.endDate | slice:0:4) : 'Present' }}</span>
+          <h3>{{ item.institution }}</h3>
+          <p class="card__subtitle">{{ item.degree }}</p>
+          @if (item.fieldOfStudy) {
+            <p class="card__subtitle muted">{{ item.fieldOfStudy }}</p>
+          }
+          @if (item.description) {
+            <p class="card__body">{{ item.description }}</p>
+          }
+        </div>
+      }
+    </div>
+  }
+</section>
