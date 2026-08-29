@@ -2,6 +2,15 @@ import { Component, signal, inject } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 
+const ROUTE_LABELS: Record<string, string> = {
+  '/': 'HOME',
+  '/education': 'EDUCATION',
+  '/licenses': 'LICENSES',
+  '/projects': 'PROJECTS',
+  '/contact': 'CONTACT',
+  '/admin/login': 'ADMIN',
+};
+
 @Component({
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   selector: 'app-root',
@@ -14,9 +23,13 @@ export class App {
   private hideTimeout?: ReturnType<typeof setTimeout>;
 
   isTransitioning = signal(false);
+  transitionText = signal('');
 
   constructor() {
-    this.router.events.pipe(filter((e) => e instanceof NavigationStart)).subscribe(() => {
+    this.router.events.pipe(filter((e) => e instanceof NavigationStart)).subscribe((event) => {
+      const navEvent = event as NavigationStart;
+      this.transitionText.set(this.getRouteLabel(navEvent.url));
+
       if (this.hideTimeout) {
         clearTimeout(this.hideTimeout);
       }
@@ -27,5 +40,10 @@ export class App {
     this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() => {
       this.hideTimeout = setTimeout(() => this.isTransitioning.set(false), 1400);
     });
+  }
+
+  private getRouteLabel(url: string): string {
+    const basePath = '/' + url.split('/').filter(Boolean)[0] || '/';
+    return ROUTE_LABELS[url] ?? ROUTE_LABELS[basePath] ?? 'ALEKSA.';
   }
 }
