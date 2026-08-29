@@ -19,7 +19,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
@@ -32,18 +33,31 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-display);
   font-weight: 600;
   line-height: 1.1;
   margin: 0 0 0.5em;
 }
 
-h1 { font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.02em; font-weight: 700; }
-h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
-h3 { font-size: 1.25rem; }
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+h3 {
+  font-size: 1.25rem;
+}
 
-p { margin: 0 0 1em; color: var(--color-muted); }
+p {
+  margin: 0 0 1em;
+  color: var(--color-muted);
+}
 
 a {
   color: var(--color-accent);
@@ -61,7 +75,10 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 /* Page sections */
@@ -86,7 +103,9 @@ button {
   background: var(--color-surface);
   transition: border-color 0.15s ease;
 
-  &:hover { border-color: var(--color-accent); }
+  &:hover {
+    border-color: var(--color-accent);
+  }
 }
 
 .card__date {
@@ -102,7 +121,10 @@ button {
   font-weight: 500;
   margin: 0.5rem 0 0;
 
-  &.muted { color: var(--color-muted); font-weight: 400; }
+  &.muted {
+    color: var(--color-muted);
+    font-weight: 400;
+  }
 }
 
 .card__body {
@@ -165,7 +187,8 @@ button {
     margin-bottom: 0.4rem;
   }
 
-  input, textarea {
+  input,
+  textarea {
     width: 100%;
     padding: 0.7rem 0.9rem;
     border: 1px solid var(--color-line);
@@ -176,7 +199,9 @@ button {
     background: var(--color-surface);
     transition: border-color 0.15s ease;
 
-    &::placeholder { color: var(--color-muted); }
+    &::placeholder {
+      color: var(--color-muted);
+    }
 
     &:focus {
       outline: none;
@@ -197,7 +222,8 @@ button {
   margin-top: 0.3rem;
 }
 
-.error-banner, .success-banner {
+.error-banner,
+.success-banner {
   padding: 0.75rem 1rem;
   border-radius: var(--radius);
   font-size: 0.9rem;
@@ -226,20 +252,18 @@ button {
     font-weight: 500;
     font-size: 0.95rem;
 
-    &[type="submit"] {
+    &[type='submit'] {
       background: var(--color-accent);
       color: var(--color-bg);
 
-      &:hover:not(:disabled) { opacity: 0.85; }
-      &:disabled { background: var(--color-line); color: var(--color-muted); cursor: not-allowed; }
-    }
-
-    &[type="button"] {
-      background: transparent;
-      border: 1px solid var(--color-line);
-      color: var(--color-ink);
-
-      &:hover { border-color: var(--color-accent); }
+      &:hover:not(:disabled) {
+        opacity: 0.85;
+      }
+      &:disabled {
+        background: var(--color-line);
+        color: var(--color-muted);
+        cursor: not-allowed;
+      }
     }
   }
 }
@@ -309,11 +333,23 @@ hr {
 }
 
 @keyframes fade-out-slide {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-8px); }
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes fade-in-slide {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
