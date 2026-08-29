@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EducationService } from '../../../core/services/education.service';
 import { Education } from '../../../core/models/education.model';
+import { MessageKey, Messages } from '../../../core/constants/messages';
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -38,7 +39,7 @@ export class AdminEducation implements OnInit {
         this.isLoading.set(false);
       },
       error: (err) => {
-        console.error('Greška pri učitavanju:', err);
+        console.error(Messages[MessageKey.EDUCATION_LOAD_FAILED], err);
         this.isLoading.set(false);
       },
     });
@@ -57,7 +58,7 @@ export class AdminEducation implements OnInit {
           this.resetForm();
           this.loadEducation();
         },
-        error: (err) => console.error('Greška pri izmeni:', err),
+error: (err) => console.error(Messages[MessageKey.EDUCATION_UPDATE_FAILED], err),
       });
     } else {
       this.educationService.create(formValue).subscribe({
@@ -65,7 +66,7 @@ export class AdminEducation implements OnInit {
           this.resetForm();
           this.loadEducation();
         },
-        error: (err) => console.error('Greška pri kreiranju:', err),
+error: (err) => console.error(Messages[MessageKey.EDUCATION_CREATE_FAILED], err),
       });
     }
   }
@@ -87,14 +88,13 @@ export class AdminEducation implements OnInit {
   }
 
   deleteItem(id: number) {
-    if (!confirm('Da li sigurno želiš da obrišeš ovaj unos?')) {
+if (!confirm(Messages[MessageKey.DELETE_CONFIRM])) {
       return;
     }
 
     this.educationService.remove(id).subscribe({
       next: () => this.loadEducation(),
-      error: (err) => console.error('Greška pri brisanju:', err),
-    });
+error: (err) => console.error(Messages[MessageKey.EDUCATION_DELETE_FAILED], err),    });
   }
 
   private resetForm() {

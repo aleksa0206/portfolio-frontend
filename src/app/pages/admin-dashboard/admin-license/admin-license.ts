@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LicenseService } from '../../../core/services/license.service';
 import { License } from '../../../core/models/license.model';
+import { MessageKey, Messages } from '../../../core/constants/messages';
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -37,7 +38,7 @@ export class AdminLicense implements OnInit {
         this.isLoading.set(false);
       },
       error: (err) => {
-        console.error('Greška pri učitavanju:', err);
+        console.error(Messages[MessageKey.LICENSE_LOAD_FAILED], err);
         this.isLoading.set(false);
       },
     });
@@ -56,7 +57,7 @@ export class AdminLicense implements OnInit {
           this.resetForm();
           this.loadLicenses();
         },
-        error: (err) => console.error('Greška pri izmeni:', err),
+        error: (err) => console.error(Messages[MessageKey.LICENSE_UPDATE_FAILED], err),
       });
     } else {
       this.licenseService.create(formValue).subscribe({
@@ -64,7 +65,7 @@ export class AdminLicense implements OnInit {
           this.resetForm();
           this.loadLicenses();
         },
-        error: (err) => console.error('Greška pri kreiranju:', err),
+        error: (err) => console.error(Messages[MessageKey.LICENSE_CREATE_FAILED], err),
       });
     }
   }
@@ -85,13 +86,13 @@ export class AdminLicense implements OnInit {
   }
 
   deleteItem(id: number) {
-    if (!confirm('Da li sigurno želiš da obrišeš ovaj unos?')) {
+    if (!confirm(Messages[MessageKey.DELETE_CONFIRM])) {
       return;
     }
 
     this.licenseService.remove(id).subscribe({
       next: () => this.loadLicenses(),
-      error: (err) => console.error('Greška pri brisanju:', err),
+      error: (err) => console.error(Messages[MessageKey.LICENSE_DELETE_FAILED], err),
     });
   }
 

@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ContactService } from '../../core/services/contact.service';
+import { MessageKey, Messages } from '../../core/constants/messages';
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -34,12 +35,12 @@ export class ContactComponent {
     this.contactService.submit(this.contactForm.value as any).subscribe({
       next: () => {
         this.isSubmitting.set(false);
-        this.successMessage.set('Poruka je uspešno poslata!');
+        this.successMessage.set(Messages[MessageKey.CONTACT_SEND_SUCCESS]);
         this.contactForm.reset();
       },
       error: (err) => {
         this.isSubmitting.set(false);
-        this.errorMessage.set('Greška pri slanju poruke. Pokušajte ponovo.');
+        this.errorMessage.set(Messages[MessageKey.CONTACT_SEND_FAILED]);
         console.error(err);
       },
     });

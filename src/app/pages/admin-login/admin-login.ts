@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { MessageKey, Messages } from '../../core/constants/messages';
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -40,7 +41,7 @@ export class AdminLogin {
       },
       error: (err) => {
         this.isLoading.set(false);
-        this.errorMessage.set('Pogrešan email ili lozinka');
+        this.errorMessage.set(Messages[MessageKey.LOGIN_FAILED]);
         console.error(err);
       },
     });
