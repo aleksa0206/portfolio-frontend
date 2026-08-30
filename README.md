@@ -1,59 +1,84 @@
-# PortfolioFrontend
+# Portfolio Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.6.
+The Angular frontend for my personal portfolio — public pages for education, licenses, and projects, plus a full admin dashboard for managing content.
 
-## Development server
+**Live site:** https://aleksao.me
 
-To start a local development server, run:
+## Tech Stack
 
-```bash
+- **Framework:** Angular 22 (standalone components, signals)
+- **Language:** TypeScript
+- **Styling:** SCSS with a design token system
+- **Forms:** Reactive Forms
+- **State:** Angular Signals
+- **HTTP:** Angular HttpClient with functional interceptors
+- **Deployment:** Docker (nginx) → Railway
+
+## Features
+
+### Public site
+
+- Home page with animated hero section
+- Education, Licenses, and Projects listing pages
+- Contact form with client + server-side validation
+
+### Admin dashboard
+
+- JWT-based login, route-protected with a functional guard
+- Full CRUD for Education, Licenses, and Projects
+- Upsert form for the About section
+- Inbox for contact messages (read / delete)
+
+### UX details
+
+- Route-based page transition animation showing the target page name
+- Auth interceptor that attaches the JWT to every protected request
+- Error interceptor that logs the user out automatically on a 401 response
+
+## Architecture
+
+src/app/
+├── core/
+│   ├── services/       # API communication per resource
+│   ├── guards/          # authGuard
+│   ├── interceptors/     # auth + error interceptors
+│   ├── models/            # TypeScript interfaces per resource
+│   └── constants/          # centralized UI message keys
+├── pages/
+│   ├── home/, education/, licenses/, projects/, contact/
+│   ├── admin-login/
+│   └── admin-dashboard/
+│       └── admin-*/          # one CRUD page per resource
+├── app.ts                      # root component, nav, page transitions
+├── app.routes.ts                 # route definitions (incl. nested admin routes)
+└── app.config.ts                   # router + HttpClient providers
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 22+
+- The portfolio-backend running locally or accessible remotely
+
+### Setup
+
+npm install
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+App runs on `http://localhost:4200`. Configure the API URL in `src/environments/environment.ts`.
 
-## Code scaffolding
+### Build
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
 ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Production build uses `environment.prod.ts` via Angular's `fileReplacements` configuration.
 
-## Running unit tests
+## Docker
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+docker build -t portfolio-frontend .
 
-```bash
-ng test
-```
+Served through nginx, configured for SPA routing (`try_files` fallback to `index.html`).
 
-## Running end-to-end tests
+## Related Repositories
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [portfolio-backend](https://github.com/aleksa0206/portfolio-backend) — Node.js / Express / Prisma API
