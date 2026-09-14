@@ -10,6 +10,7 @@
           type="email"
           formControlName="email"
           placeholder="admin@example.com"
+          autocomplete="username"
           (animationstart)="onAutofill($event, 'email')"
         />
         @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
