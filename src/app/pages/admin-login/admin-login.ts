@@ -23,6 +23,14 @@ export class AdminLogin {
     password: ['', [Validators.required]],
   });
 
+  onAutofill(event: AnimationEvent, controlName: 'email' | 'password') {
+    if (event.animationName !== 'autofill') {
+      return;
+    }
+    const value = (event.target as HTMLInputElement).value;
+    this.loginForm.get(controlName)?.setValue(value);
+  }
+
   onSubmit() {
     if (this.loginForm.invalid) {
       return;

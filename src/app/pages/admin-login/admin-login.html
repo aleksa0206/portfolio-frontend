@@ -5,7 +5,13 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" type="email" formControlName="email" placeholder="admin@example.com" />
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="admin@example.com"
+          (animationstart)="onAutofill($event, 'email')"
+        />
         @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
           <span class="error">Enter a valid email</span>
         }
@@ -18,6 +24,7 @@
           type="password"
           formControlName="password"
           autocomplete="current-password"
+          (animationstart)="onAutofill($event, 'password')"
         />
         @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
           <span class="error">Password is required</span>
